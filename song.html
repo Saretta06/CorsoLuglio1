@@ -40,19 +40,23 @@
         window.onload = gestoreLoad;
 
         function gestoreLoad() {
-
+            //con getItem mi richiamo le canzoni che sono salvate nel localStore(se ci sono);
             let storedSongs = localStorage.getItem('canzoni');
+
+            //dichiaro l'array; 
             let listaSong;
 
+            //se queste canzoni sono salvate nel localStore, converte la stringa
+            //JSON nel formato comprensibile da JS
             if (storedSongs) {
                 listaSong = JSON.parse(storedSongs);
+            //altrimenti inizializza un array vuoto;
             } else {
                 listaSong = [];
             }
 
-           // let listaSong = JSON.parse(localStorage.getItem('canzoni')) || [];
-
-
+            //se questo array è dunque vuoto, aggiungo staticamente alcune canzoni predefinite
+            //e le salvo nel localStorage; 
             if (listaSong.length === 0) {
                 let s1 = new Song("Sei fantastica", "Max Pezzali", 2007, "pop", "max.jpeg");
                 let s2 = new Song("Caminando por la vida", "Melendi", 2008, "pop", "mele.jpeg");
