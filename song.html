@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 15px;
+        }
+
+        #result {
+            display: flex;
+            flex-direction: row;
+
+        }
+    </style>
+
+    <script>
+
+        function remove(nodo) {
+            var nodo = nodo;
+            while (nodo.firstChild) {
+                nodo.removeChild(nodo.firstChild);
+            }
+        }
+
+        class Song {
+            constructor(titolo, autore, anno, genere, img) {
+                this.titolo = titolo;
+                this.autore = autore;
+                this.anno = anno;
+                this.genere = genere;
+                this.img = img;
+            }
+        }
+
+        window.onload = gestoreLoad;
+
+        function gestoreLoad() {
+
+            let storedSongs = localStorage.getItem('canzoni');
+            let listaSong;
+
+            if (storedSongs) {
+                listaSong = JSON.parse(storedSongs);
+            } else {
+                listaSong = [];
+            }
+
+           // let listaSong = JSON.parse(localStorage.getItem('canzoni')) || [];
+
+
+            if (listaSong.length === 0) {
+                let s1 = new Song("Sei fantastica", "Max Pezzali", 2007, "pop", "max.jpeg");
+                let s2 = new Song("Caminando por la vida", "Melendi", 2008, "pop", "mele.jpeg");
+                let s3 = new Song("Por la boca vive el pez", "Fito y Fitipaldis", 2007, "rock", "fito.jpeg");
+                let s4 = new Song("Me dicen Cuba", "Alex Abreu", 2020, "latinSalsa", "alex.jpeg");
+
+                listaSong.push(s1, s2, s3, s4);
+                salvaDati(listaSong);
+            }
+
+            let btnInserisci = document.getElementById("btnInserisci");
+            btnInserisci.onclick = inserisci;
+
+            let btnVisualizza = document.getElementById("btnVisualizza");
+            btnVisualizza.onclick = visualizza;
+
+            let btnCambia = document.getElementById("btnCambia");
+            btnCambia.onclick = cambia;
+
+            let nodo = document.getElementById("result");
+
+            function popolaSelect() {
+
+                let nodoSelect = document.getElementById("autore1");
+                remove(nodoSelect);
+
+                for (let i = 0; i < listaSong.length; i++) {
+                    let nodoOption = document.createElement("option");
+                    nodoOption.textContent = listaSong[i].autore;
+                    nodoOption.value = listaSong[i].autore;
+                    nodoSelect.appendChild(nodoOption);
+                }
+            }
+            popolaSelect();
+
+            function salvaDati(lista) {
+                localStorage.setItem('canzoni', JSON.stringify(lista));
+                alert("lista aggiornata");
+            }
+
+
+            function inserisci() {
+                let titolo = document.getElementById("titolo").value;
+                let autore = document.getElementById("autore").value;
+                let anno = parseInt(document.getElementById("anno").value);
+                let genere = document.getElementById("genere").value;
+                let img = document.getElementById("img").value;
+
+                let s1 = new Song(titolo, autore, anno, genere, img);
+                listaSong.push(s1);
+                alert("Canzone inserita con successo");
+                let nodoS = document.getElementById("autore1");
+
+
+                document.getElementById("titolo").value = '';
+                document.getElementById("autore").value = '';
+                document.getElementById("anno").value = '';
+                document.getElementById("genere").value = '';
+                document.getElementById("img").value = '';
+
+                popolaSelect();
+                salvaDati(listaSong);
+            }
+
+            function visualizza() {
+                remove(nodo);
+                for (let i = 0; i < listaSong.length; i++) {
+
+                    let nodoCard = document.createElement("div");
+                    nodoCard.className = "card";
+                    nodoCard.style.width = "18rem";
+
+                    let nodoImg = document.createElement("img");
+                    nodoImg.src = listaSong[i].img;
+                    nodoImg.className = "card-img-top";
+                    nodoCard.appendChild(nodoImg);
+
+                    let nodoCardBody = document.createElement("div");
+                    nodoCardBody.className = "card-body";
+                    nodoCard.appendChild(nodoCardBody);
+
+                    let nodoTitolo = document.createElement("h5");
+                    nodoTitolo.className = "card-title";
+                    nodoTitolo.textContent = "Titolo: " + listaSong[i].titolo;
+                    nodoTitolo.style.color = 'red';
+                    nodoCardBody.appendChild(nodoTitolo);
+
+                    let nodoAutore = document.createElement("h5");
+                    nodoAutore.className = "card-title";
+                    nodoAutore.textContent = "Autore: " + listaSong[i].autore;
+                    nodoCardBody.appendChild(nodoAutore);
+
+                    let nodoAnno = document.createElement("h5");
+                    nodoAnno.className = "card-title";
+                    nodoAnno.textContent = "Anno: " + listaSong[i].anno;
+                    nodoCardBody.appendChild(nodoAnno);
+
+                    let nodoGenere = document.createElement("h5");
+                    nodoGenere.className = "card-title";
+                    nodoGenere.textContent = "Genere: " + listaSong[i].genere;
+                    nodoCardBody.appendChild(nodoGenere);
+
+                    let nodoText = document.createElement("p");
+                    nodoText.className = "card-text";
+
+                    nodoText.textContent = "";
+                    nodoCardBody.appendChild(nodoText);
+                    nodo.appendChild(nodoCard);
+                }
+            }
+
+            function cambia() {
+                let ok = 0;
+                let autore = document.getElementById("autore1").value;
+                let img = document.getElementById("img1").value;
+                for (let i = 0; i < listaSong.length; i++) {
+                    if (listaSong[i].autore == autore) {
+                        listaSong[i].img = img;
+                        ok = 1;
+                    }
+                }
+
+                if (ok == 0) {
+                    alert("Artista non trovato");
+                }
+                if (ok > 0) {
+                    alert("Immagine modificata con successo");
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Canzoni:</h1>
+    Inserisci il titolo: <input type="text" id="titolo"><br><br>
+    Inserisci l'autore: <input type="text" id="autore"><br><br>
+    Inserisci l'anno: <input type="text" id="anno"><br><br>
+    Inserisci il genere: <input type="text" id="genere"><br><br>
+    Inserisci img: <input type="text" id="img"><br><br>
+
+    <button id="btnInserisci">Inserisci</button>
+    <hr>
+    <hr>
+    <button id="btnVisualizza">Visualizza tutte le canzoni</button>
+    <hr>
+    <hr>
+
+    Inserisci autore per modificare: <select id="autore1"> </select><br><br>
+    Inserisci la nuova immagine: <input type="text" id="img1"><br><br>
+    <button id="btnCambia">Cambia</button>
+    <hr>
+    <hr>
+
+    <div id="result"></div>
+
+
+</body>
+
+</html>
