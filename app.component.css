@@ -1,0 +1,40 @@
+/* Centra il titolo */
+
+.navbar-brand {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.navbar-brand h1 {
+    margin: 0;
+}
+
+/* Centra gli elementi di navigazione */
+.navbar-nav {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Centra verticalmente e orizzontalmente l'intera navbar */
+.navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navbar-collapse {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.footer {
+    background: #f8f9fa;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}

@@ -1,0 +1,27 @@
+.example-card {
+    max-width: 200px;
+  }
+  
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+  
+  .card1 {
+    width: 200px;
+    margin-top: 50px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform: translateZ(0); /* Per migliorare la qualità dell'antialiasing */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); /* Ombra per effetto di sollevamento */
+    border-radius: 12px; /* Arrotonda gli angoli della card */
+}
+
+.card1:hover {
+    transform: translateY(-2px); /* Sposta l'elemento verso l'alto di 2px quando il mouse passa sopra */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.16), 0 4px 6px rgba(0,0,0,0.23); /* Ombra più pronunciata durante il rialzo */
+}
+
+.corsi{
+  margin-top: 100px;
+  text-align: left;
+}
